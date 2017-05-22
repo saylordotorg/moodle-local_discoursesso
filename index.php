@@ -46,8 +46,8 @@ $PAGE->set_heading($strmodulename);
 
 // Check if user is logged and not guest. If not, redirect to login page.
 $context = context_course::instance(1);
+$SESSION->wantsurl = $PAGE->url . '?sso=' . $payload . '&sig=' . $signature;
 if (isguestuser()) {
-	$SESSION->wantsurl = $PAGE->url . '?sso=' . $payload . '&sig=' . $signature;
 	redirect(get_login_url());
 }
 require_login(null, false);

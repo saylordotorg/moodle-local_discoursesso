@@ -31,6 +31,7 @@ global $CFG, $DB, $USER;
 
 $payload = required_param('sso', PARAM_RAW);
 $signature = required_param('sig', PARAM_RAW);
+$wantsurl = optional_param('wantsurl', NULL, PARAM_RAW);
 
 // Print the header
 $strmodulename = get_string('modulename', 'local_discoursesso');
@@ -41,13 +42,34 @@ $PAGE->set_url('/local/discoursesso/index.php', array('sso'=>$payload, 'sig'=>$s
 $PAGE->set_title($strmodulename);
 $PAGE->set_heading($strmodulename);
 
-// Check if user is logged and not guest. If not, redirect to login page.
 $context = context_course::instance(1);
-$SESSION->wantsurl = $PAGE->url . '?sso=' . $payload . '&sig=' . $signature;
+
+if (isset($SESSION->wantsurl) && !isset($wantsurl)) {
+    $wantsurl = urlencode($SESSION->wantsurl);
+}
+
+//Build wantsurl
+$redirecturl = $PAGE->url . '?sso=' . $payload . '&sig=' . $signature;
+if (isset($wantsurl)) {
+    $redirecturl = $redirecturl . '&wantsurl=' . urlencode($SESSION->wantsurl);
+}
+
+// Set wantsurl so user is redirected back here on login
+$SESSION->wantsurl =  $redirecturl;
+
+// Check if user is logged and not guest. If not, redirect to login page.
 if (isguestuser()) {
 	redirect(get_login_url());
 }
 require_login(null, false);
+
+// Reset $SESSION->wantsurl
+if (!isset($wantsurl)) {
+    unset($SESSION->wantsurl);
+}
+else {
+    $SESSION->wantsurl = urldecode($wantsurl);
+}
 
 // Create SSOHelper and configure 
 $ssohelper = new Cviebrock\DiscoursePHP\SSOHelper();

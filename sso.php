@@ -37,7 +37,7 @@ $wantsurl = optional_param('wantsurl', NULL, PARAM_RAW);
 $strmodulename = get_string('modulename', 'local_discoursesso');
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('standard');
-$PAGE->set_url('/local/discoursesso/index.php', array('sso'=>$payload, 'sig'=>$signature));
+$PAGE->set_url('/local/discoursesso/sso.php', array('sso'=>$payload, 'sig'=>$signature));
 //$PAGE->navbar->add($strcertificates);
 $PAGE->set_title($strmodulename);
 $PAGE->set_heading($strmodulename);

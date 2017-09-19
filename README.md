@@ -38,7 +38,7 @@ The plugin needs to be set up on both the Moodle side and the Discourse side. Th
 1. Navigate to the Discourse admin dashboard and go to Settings->Login.
 2. Under the 'sso url' setting enter in "{your-moodle-url}/local/discoursesso/sso.php" substituting the base url of your Moodle installation for {your-moodle-url}.
 3. Under the 'sso secret' setting enter in the previously generated secret.
-######Optional
+#####Optional:
     The following settings are optional and may be checked:
         1. sso overrides bio
         2. sso overrides email
@@ -46,7 +46,7 @@ The plugin needs to be set up on both the Moodle side and the Discourse side. Th
         4. sso overrides name
         5. sso overrides avatar (Note: the DiscourseSSO plugin will not supply an avatar if the student does not have an avatar set in Moodle. This is to keep the default Discourse avatars if the avatar is not set - otherwise these students will have the generic Moodle avatar which does not look as good.)
 
-###### Moodle Setup
+#### Moodle Setup
 
 1. Navigate to the DiscourseSSO settings page from the administration block.
 2. Enter the previously generated secret into the "Shared SSO Secret Key" field. Make sure it matches the secret entered into Discourse!

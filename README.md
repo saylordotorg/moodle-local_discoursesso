@@ -21,7 +21,7 @@ Install the plugin following the [directions](https://docs.moodle.org/32/en/Inst
 
 If you have git installed, simply visit the Moodle /local directory and clone this repo:
 
-    git clone https://github.com/saylordotorg/moodle-mod_accredible.git accredible
+    git clone https://github.com/saylordotorg/moodle-local_discoursesso.git discoursesso
 
 #### Download the zip
 

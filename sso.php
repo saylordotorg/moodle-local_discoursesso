@@ -80,6 +80,7 @@ if (!($ssohelper->validatePayload($payload, $signature))) {
     // invaild, deny
     header("HTTP/1.1 403 Forbidden");
     echo("Bad SSO request");
+    $exceptionparam = new stdClass;
     $exceptionparam->payload = $payload;
     $exceptionparam->signature = $signature;
     throw new moodle_exception('badssoerror', 'discoursesso', $CFG->discoursesso_discourse_url, $exceptionparam);

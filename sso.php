@@ -41,8 +41,6 @@ $PAGE->set_url('/local/discoursesso/sso.php', array('sso'=>$payload, 'sig'=>$sig
 $PAGE->set_title($strmodulename);
 $PAGE->set_heading($strmodulename);
 
-$context = context_course::instance(1);
-
 if (isset($SESSION->wantsurl) && !isset($wantsurl)) {
     $wantsurl = urlencode($SESSION->wantsurl);
 }

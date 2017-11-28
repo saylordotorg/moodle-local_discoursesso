@@ -90,22 +90,22 @@ if (!($ssohelper->validatePayload($payload, $signature))) {
 $nonce = $ssohelper->getNonce($payload);
 
 // Required and must be unique to your application
-$userId = $USER->id;
+$userid = $USER->id;
 
 // Required and must be consistent with your application
-$userEmail = $USER->email;
+$useremail = $USER->email;
 
 // Optional - if you don't set these, Discourse will generate suggestions
 // based on the email address
 
 // Get the user's description
 $user = $DB->get_record('user', array('id' => $USER->id));
-$userDescription = format_text($user->description, $user->descriptionformat);
+$userdescription = format_text($user->description, $user->descriptionformat);
 
-$extraParameters = array(
+$extraparams = array(
     'username' => $USER->username,
     'name'     => fullname($USER, true),
-    'bio'      => $userDescription
+    'bio'      => $userdescription
 );
 
 // Generate user avatar url
@@ -113,14 +113,14 @@ $userpicture = new user_picture($USER);
 $userpicture->size = 1; // Size f1.
 // Did the user upload an avatar or is gravatar enabled?
 if (($userpicture->user->picture > 0) || !empty($CFG->enablegravatar)) {
-    $userAvatar = $userpicture->get_url($PAGE)->out(false);
+    $useravatar = $userpicture->get_url($PAGE)->out(false);
 }
 // Add the avatar if set
-if (isset($userAvatar)) {
-    $extraParameters['avatar_url'] = $userAvatar;
+if (isset($useravatar)) {
+    $extraparams['avatar_url'] = $useravatar;
 }
 
 // build query string and redirect back to the Discourse site
-$query = $ssohelper->getSignInString($nonce, $userId, $userEmail, $extraParameters);
+$query = $ssohelper->getSignInString($nonce, $userid, $useremail, $extraparams);
 $url = $CFG->discoursesso_discourse_url . '/session/sso_login?' . $query;
 redirect($url);

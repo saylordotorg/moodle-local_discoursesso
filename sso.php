@@ -100,10 +100,14 @@ $useremail = $USER->email;
 $user = $DB->get_record('user', array('id' => $USER->id));
 $userdescription = format_text($user->description, $user->descriptionformat);
 
+$userlocale = explode('_', $USER->lang)[0];
+
 $extraparams = array(
     'username' => $USER->username,
     'name'     => fullname($USER, true),
-    'bio'      => $userdescription
+    'bio'      => $userdescription,
+    'locale'   => $userlocale,
+    'add_groups' => $userlocale
 );
 
 // Generate user avatar url

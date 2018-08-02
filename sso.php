@@ -107,7 +107,7 @@ $extraparams = array(
     'name'     => fullname($USER, true),
     'bio'      => $userdescription,
     'locale'   => $userlocale,
-    'add_groups' => $userlocale
+    'add_groups' => 'lang_'.$userlocale
 );
 
 // Generate user avatar url

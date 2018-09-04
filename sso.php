@@ -96,6 +96,34 @@ $useremail = $USER->email;
 // Optional - if you don't set these, Discourse will generate suggestions
 // based on the email address.
 
+// get currunt user roles
+$trust_lvl= 1;
+global $USER, $DB;
+$usercontext = context_user::instance($USER->id);
+$roles=$DB->get_records_menu('role_assignments',array('userid'=>$USER->id),null,'id,roleid');
+$roles = array_unique($roles);
+
+if (in_array("5", $roles)) { //student roleid 5
+    $trust_lvl= 1;
+}
+if (in_array("9", $roles)) { //editing global-teacher role 9
+    $trust_lvl= 3;
+}
+if (in_array("3", $roles)) { //editing teacher role 3
+    $trust_lvl= 4;
+}
+// check if user is administrtor
+$admins = get_admins();
+$isadmin = false;
+ foreach ($admins as $admin){
+	 if ($USER->id == $admin->id) {
+		 $isadmin = true; break;
+		 } 
+ } 
+if ($isadmin) {
+	$trust_lvl= 4;
+	}
+
 // Get the user's description.
 $user = $DB->get_record('user', array('id' => $USER->id));
 $userdescription = format_text($user->description, $user->descriptionformat);
@@ -107,7 +135,8 @@ $extraparams = array(
     'name'     => fullname($USER, true),
     'bio'      => $userdescription,
     'locale'   => $userlocale,
-    'groups' => 'lang_'.$userlocale
+    'groups' => 'lang_'.$userlocale,
+	'trust_level'=> $trust_lvl
 );
 
 // Generate user avatar url

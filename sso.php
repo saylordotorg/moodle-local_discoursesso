@@ -127,15 +127,26 @@ if ($isadmin) {
 // Get the user's description.
 $user = $DB->get_record('user', array('id' => $USER->id));
 $userdescription = format_text($user->description, $user->descriptionformat);
-
-$userlocale = explode('_', $USER->lang)[0];
+$group_lang = explode('_', $USER->lang)[0];
+//Match Discourse language code
+switch ($USER->lang) {
+    case "pt_br":
+       $userlocale = "pt_BR";
+        break;
+    case "es_mx":
+        $userlocale = "es";
+        break;
+    case "en_us":
+        $userlocale = "en";
+        break;
+   }
 
 $extraparams = array(
     'username' => $USER->username,
     'name'     => fullname($USER, true),
     'bio'      => $userdescription,
     'locale'   => $userlocale,
-    'groups' => 'lang_'.$userlocale,
+    'groups' => 'lang_'.$group_lang,
 	'trust_level'=> $trust_lvl
 );
 

@@ -97,57 +97,63 @@ $useremail = $USER->email;
 // based on the email address.
 
 // get currunt user roles
-$trust_lvl= 1;
-global $USER, $DB;
-$usercontext = context_user::instance($USER->id);
-$roles=$DB->get_records_menu('role_assignments',array('userid'=>$USER->id),null,'id,roleid');
-$roles = array_unique($roles);
-
-if (in_array("5", $roles)) { //student roleid 5
+function user_role($userid){
+	$trust_lvl= 1;
+	global $USER, $DB;
+	$usercontext = context_user::instance($userid);
+	$roles=$DB->get_records_menu('role_assignments',array('userid'=>$userid),null,'id,roleid');
+	$roles = array_unique($roles);
+	
+	if (in_array("5", $roles)) { //student roleid 5
     $trust_lvl= 1;
-}
-if (in_array("9", $roles)) { //editing global-teacher role 9
+	}
+	if (in_array("9", $roles)) { //editing global-teacher role 9
     $trust_lvl= 3;
-}
-if (in_array("3", $roles)) { //editing teacher role 3
+	}
+	if (in_array("3", $roles)) { //editing teacher role 3
     $trust_lvl= 4;
-}
-// check if user is administrtor
-$admins = get_admins();
-$isadmin = false;
- foreach ($admins as $admin){
-	 if ($USER->id == $admin->id) {
-		 $isadmin = true; break;
-		 } 
- } 
-if ($isadmin) {
-	$trust_lvl= 4;
+	}
+	// check if user is administrtor
+	$admins = get_admins();$isadmin = false;
+	foreach ($admins as $admin){
+		if ($userid == $admin->id) {
+			$isadmin = true; break;
+			}
+		} 
+			if ($isadmin) {
+					$trust_lvl= 4;
+				}
+	return $trust_lvl;
 	}
 
 // Get the user's description.
+
 $user = $DB->get_record('user', array('id' => $USER->id));
 $userdescription = format_text($user->description, $user->descriptionformat);
 $group_lang = explode('_', $USER->lang)[0];
 //Match Discourse language code
-switch ($USER->lang) {
-    case "pt_br":
-       $userlocale = "pt_BR";
-        break;
-    case "es_mx":
-        $userlocale = "es";
-        break;
-    case "en_us":
-        $userlocale = "en";
-        break;
-   }
+function user_locale($user_lang){
+switch ($user_lang) {
+	case "pt_br":
+		$userlocale = "pt_BR";
+		break;
+	case "es_mx":
+		$userlocale = "es";
+		break;
+	case "en_us":
+		$userlocale = "en";
+		break;
+	}
+   return $userlocale;
+	}
 
 $extraparams = array(
     'username' => $USER->username,
     'name'     => fullname($USER, true),
     'bio'      => $userdescription,
-    'locale'   => $userlocale,
+    'locale'   => user_locale($USER->lang),
     'groups' => 'lang_'.$group_lang,
-	'trust_level'=> $trust_lvl
+	'trust_level'=> user_role($USER->id)
 );
 
 // Generate user avatar url

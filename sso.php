@@ -157,7 +157,7 @@ $extraparams = array(
 	'name'     => fullname($USER, true),
 	'bio'      => $userdescription,
 	'locale'   => user_locale($USER->lang),
-	'groups' => 'lang_'.group_lang)$USER->lang),
+	'groups' => 'lang_'.group_lang($USER->lang),
 	'trust_level'=> user_role($USER->id)
 	);
 

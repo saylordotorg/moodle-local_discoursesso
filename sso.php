@@ -130,7 +130,10 @@ function user_role($userid){
 
 $user = $DB->get_record('user', array('id' => $USER->id));
 $userdescription = format_text($user->description, $user->descriptionformat);
-$group_lang = explode('_', $USER->lang)[0];
+function group_lang($user_lang){
+	$group_lang = explode('_', )[0];
+	return $group_lang;
+	}
 //Match Discourse language code
 function user_locale($user_lang){
 switch ($user_lang) {
@@ -152,7 +155,7 @@ $extraparams = array(
     'name'     => fullname($USER, true),
     'bio'      => $userdescription,
     'locale'   => user_locale($USER->lang),
-    'groups' => 'lang_'.$group_lang,
+    'groups' => 'lang_'.group_lang)$USER->lang),
 	'trust_level'=> user_role($USER->id)
 );
 

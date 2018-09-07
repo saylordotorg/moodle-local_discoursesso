@@ -130,6 +130,8 @@ function user_role($userid){
 
 $user = $DB->get_record('user', array('id' => $USER->id));
 $userdescription = format_text($user->description, $user->descriptionformat);
+
+//set user group
 function group_lang($user_lang){
 	$group_lang = explode('_', )[0];
 	return $group_lang;

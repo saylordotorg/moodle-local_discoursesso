@@ -138,28 +138,28 @@ function group_lang($user_lang){
 	}
 //Match Discourse language code
 function user_locale($user_lang){
-switch ($user_lang) {
-	case "pt_br":
+	switch ($user_lang) {
+		case "pt_br":
 		$userlocale = "pt_BR";
 		break;
-	case "es_mx":
+		case "es_mx":
 		$userlocale = "es";
 		break;
-	case "en_us":
+		case "en_us":
 		$userlocale = "en";
 		break;
-	}
-   return $userlocale;
+		}
+	return $userlocale;
 	}
 
 $extraparams = array(
-    'username' => $USER->username,
-    'name'     => fullname($USER, true),
-    'bio'      => $userdescription,
-    'locale'   => user_locale($USER->lang),
-    'groups' => 'lang_'.group_lang)$USER->lang),
+	'username' => $USER->username,
+	'name'     => fullname($USER, true),
+	'bio'      => $userdescription,
+	'locale'   => user_locale($USER->lang),
+	'groups' => 'lang_'.group_lang)$USER->lang),
 	'trust_level'=> user_role($USER->id)
-);
+	);
 
 // Generate user avatar url
 $userpicture = new user_picture($USER);

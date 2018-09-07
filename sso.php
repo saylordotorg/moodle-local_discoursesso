@@ -133,7 +133,7 @@ $userdescription = format_text($user->description, $user->descriptionformat);
 
 //set user group
 function group_lang($user_lang){
-	$group_lang = explode('_', )[0];
+	$group_lang = explode('_',$user_lang)[0];
 	return $group_lang;
 	}
 //Match Discourse language code

@@ -156,9 +156,13 @@ $extraparams = array(
 	'username' => $USER->username,
 	'name'     => fullname($USER, true),
 	'bio'      => $userdescription,
+	'locale_force_update'=> true,
+	'external_id'=> $USER->id,
+	'avatar_force_update'=> true,
 	'locale'   => user_locale($USER->lang),
 	'groups' => 'lang_'.group_lang($USER->lang),
 	'trust_level'=> user_role($USER->id)
+	
 	);
 
 // Generate user avatar url

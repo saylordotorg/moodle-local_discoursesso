@@ -83,13 +83,16 @@ class SSOHelper
             );
         
         $parameters = array_merge($mainparameters, $extraParameters);
-
-        $payload = base64_encode(http_build_query($parameters));
-
+		
+	$payload = base64_encode(http_build_query($parameters));
+	
+	error_log($payload, 0);
+	 
         $data = array(
             'sso' => $payload,
             'sig' => $this->signPayload($payload),
         );
+		
 
         return http_build_query($data);
     }

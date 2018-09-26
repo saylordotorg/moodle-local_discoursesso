@@ -82,7 +82,7 @@ class SSOHelper
                 'email'       => $email,
             );
         
-        $parameters = array_merge($mainparameters, $extraparams);
+        $parameters = array_merge($mainparameters, $extraParameters);
 
         $payload = base64_encode(http_build_query($parameters));
 

@@ -21,7 +21,7 @@
  * @copyright  2017 Saylor Academy
  * @author     John Azinheira
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-*/
+ */
 
 require_once('../../config.php');
 
@@ -42,13 +42,13 @@ $PAGE->set_title($strmodulename);
 $PAGE->set_heading($strmodulename);
 
 if (isset($SESSION->wantsurl) && !isset($wantsurl)) {
-    $wantsurl = urlencode($SESSION->wantsurl);
+	$wantsurl = urlencode($SESSION->wantsurl);
 }
 
 // Build wantsurl.
 $redirecturl = $PAGE->url . '?sso=' . $payload . '&sig=' . $signature;
 if (isset($wantsurl)) {
-    $redirecturl = $redirecturl . '&wantsurl=' . urlencode($SESSION->wantsurl);
+	$redirecturl = $redirecturl . '&wantsurl=' . urlencode($SESSION->wantsurl);
 }
 
 // Set wantsurl so user is redirected back here on login.
@@ -62,27 +62,27 @@ require_login(null, false);
 
 // Reset $SESSION->wantsurl.
 if (!isset($wantsurl)) {
-    unset($SESSION->wantsurl);
+	unset($SESSION->wantsurl);
 }
 else {
-    $SESSION->wantsurl = urldecode($wantsurl);
+	$SESSION->wantsurl = urldecode($wantsurl);
 }
 
-// Create SSOHelper and configure 
+// Create SSOHelper and configure
 $ssohelper = new Cviebrock\DiscoursePHP\SSOHelper();
 
 $ssohelper->setSecret($CFG->discoursesso_secret_key);
 
 // Validate the payload.
 if (!($ssohelper->validatePayload($payload, $signature))) {
-    // invalid, deny.
-    header("HTTP/1.1 403 Forbidden");
-    echo("Bad SSO request");
-    $exceptionparam = new stdClass;
-    $exceptionparam->payload = $payload;
-    $exceptionparam->signature = $signature;
-    throw new moodle_exception('badssoerror', 'discoursesso', $CFG->discoursesso_discourse_url, $exceptionparam);
-    die();
+	// invalid, deny.
+	header("HTTP/1.1 403 Forbidden");
+	echo("Bad SSO request");
+	$exceptionparam = new stdClass;
+	$exceptionparam->payload = $payload;
+	$exceptionparam->signature = $signature;
+	throw new moodle_exception('badssoerror', 'discoursesso', $CFG->discoursesso_discourse_url, $exceptionparam);
+	die();
 }
 
 $nonce = $ssohelper->getNonce($payload);
@@ -103,28 +103,27 @@ function user_role($userid){
 	$usercontext = context_user::instance($userid);
 	$roles=$DB->get_records_menu('role_assignments',array('userid'=>$userid),null,'id,roleid');
 	$roles = array_unique($roles);
-	
-	if (in_array("5", $roles)) { //student roleid 5
-    $trust_lvl= 1;
-	}
+
 	if (in_array("9", $roles)) { //editing global-teacher role 9
-    $trust_lvl= 3;
+		$extraparams['moderator']='true';
 	}
 	if (in_array("3", $roles)) { //editing teacher role 3
-    $trust_lvl= 4;
+		$extraparams['moderator']='true';
 	}
 	// check if user is administrtor
-	$admins = get_admins();$isadmin = false;
+	$admins = get_admins();
+	$isadmin = false;
 	foreach ($admins as $admin){
 		if ($userid == $admin->id) {
-			$isadmin = true; break;
-			}
-		} 
-			if ($isadmin) {
-					$trust_lvl= 4;
-				}
-	return $trust_lvl;
+			$isadmin = true;
+			break;
+		}
 	}
+	if ($isadmin) {
+		$extraparams['admin']='true';
+	}
+	//return $trust_lvl;
+}
 
 // Get the user's description.
 
@@ -135,22 +134,24 @@ $userdescription = format_text($user->description, $user->descriptionformat);
 function group_lang($user_lang){
 	$group_lang = explode('_',$user_lang)[0];
 	return $group_lang;
-	}
+}
 //Match Discourse language code
 function user_locale($user_lang){
 	switch ($user_lang) {
 		case "pt_br":
-		$userlocale = "pt_BR";
-		break;
+			$userlocale = "pt_BR";
+			break;
 		case "es_mx":
-		$userlocale = "es";
-		break;
+			$userlocale = "es";
+			break;
 		case "en_us":
-		$userlocale = "en";
-		break;
-		}
-	return $userlocale;
+			$userlocale = "en";
+			break;
 	}
+	return $userlocale;
+}
+
+user_role($USER->id); // set user role
 
 $extraparams = array(
 	'username' => $USER->username,
@@ -160,21 +161,21 @@ $extraparams = array(
 	'external_id'=> $USER->id,
 	'avatar_force_update'=> 'true',
 	'locale'   => user_locale($USER->lang),
-	'groups' => 'lang_'.group_lang($USER->lang),
+	'groups' => 'lang_'.group_lang($USER->lang)
 	//'trust_level'=> user_role($USER->id)
-	
-	);
+
+);
 
 // Generate user avatar url
 $userpicture = new user_picture($USER);
 $userpicture->size = 1; // Size f1.
 // Did the user upload an avatar or is gravatar enabled?
 if (($userpicture->user->picture > 0) || !empty($CFG->enablegravatar)) {
-    $useravatar = $userpicture->get_url($PAGE)->out(false);
+	$useravatar = $userpicture->get_url($PAGE)->out(false);
 }
 // Add the avatar if set.
 if (isset($useravatar)) {
-    $extraparams['avatar_url'] = $useravatar;
+	$extraparams['avatar_url'] = $useravatar;
 }
 
 // Build query string and redirect back to the Discourse site.

@@ -76,11 +76,13 @@ class SSOHelper
     public function getSignInString($nonce, $id, $email, $extraParameters = [])
     {
 
-        $parameters = array(
+        $mainparameters = array(
                 'nonce'       => $nonce,
                 'external_id' => $id,
                 'email'       => $email,
-            ) + $extraParameters;
+            );
+        
+        $parameters = array_merge($mainparameters, $extraParameters);
 
         $payload = base64_encode(http_build_query($parameters));
 

@@ -83,14 +83,28 @@ class SSOHelper
             );
         
         $parameters = array_merge($mainparameters, $extraParameters);
-
-        $payload = base64_encode(http_build_query($parameters));
+		
+		$payload = base64_encode(http_build_query($parameters));
 
         $data = array(
             'sso' => $payload,
             'sig' => $this->signPayload($payload),
         );
-
+		
+		//logg
+		$log_parameters = print_r($parameters,true);
+		$log  = "parameters: ".$log_parameters.PHP_EOL.
+        "-------------------------".PHP_EOL;
+		
+		$log_data = print_r($data,true);
+		
+		$log  .= "data: ".$log_data.PHP_EOL.
+        "-------------------------".PHP_EOL;
+		
+		$log  .= "payload: ".$payload.PHP_EOL.
+        "=========================".PHP_EOL;
+		
+		file_put_contents('./log_discourse.log', $log, FILE_APPEND);
         return http_build_query($data);
     }
 

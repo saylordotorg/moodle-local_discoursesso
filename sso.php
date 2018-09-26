@@ -147,6 +147,8 @@ function user_locale($user_lang){
 		case "en_us":
 			$userlocale = "en";
 			break;
+		 default:
+			$userlocale = "es";
 	}
 	return $userlocale;
 }

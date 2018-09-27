@@ -76,18 +76,23 @@ class SSOHelper
     public function getSignInString($nonce, $id, $email, $extraParameters = [])
     {
 
-        $parameters = array(
+        $mainparameters = array(
                 'nonce'       => $nonce,
                 'external_id' => $id,
                 'email'       => $email,
-            ) + $extraParameters;
-
-        $payload = base64_encode(http_build_query($parameters));
-
+            );
+        
+        $parameters = array_merge($mainparameters, $extraParameters);
+		
+	$payload = base64_encode(http_build_query($parameters));
+	
+	error_log($payload, 0);
+	 
         $data = array(
             'sso' => $payload,
             'sig' => $this->signPayload($payload),
         );
+		
 
         return http_build_query($data);
     }

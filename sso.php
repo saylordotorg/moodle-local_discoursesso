@@ -122,7 +122,7 @@ function user_role($userid){
 	if ($isadmin) {
 		$extraparams['admin']='true';
 	}
-	//return $trust_lvl;
+	return $extraparams;
 }
 
 // Get the user's description.

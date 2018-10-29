@@ -177,8 +177,7 @@ if (($userpicture->user->picture > 0) || !empty($CFG->enablegravatar)) {
 }
 // Add the avatar if set.
 if (isset($useravatar)) {
-	//$extraparams['avatar_url'] = $useravatar;
-	$extraparams['avatar_url'] =$CFG->wwwroot."/webservice/pluginfile.php/".$USER->id."/user/icon/f1?token=".$CFG->discoursesso_ws_token;
+	$extraparams['avatar_url'] = $useravatar;
 }
 
 // Build query string and redirect back to the Discourse site.

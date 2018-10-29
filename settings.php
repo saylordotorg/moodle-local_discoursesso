@@ -43,5 +43,8 @@ if ( $hassiteconfig ){
 	$settings->add(
 		new admin_setting_configtext('discoursesso_discourse_url', get_string('discourseurllabel', 'local_discoursesso'), get_string('discourseurlhelp', 'local_discoursesso'), 'https://discourse.example', PARAM_TEXT)
 	);
+	$settings->add(
+		new admin_setting_configtext('discoursesso_ws_token', get_string('wstoken', 'local_discoursesso'), get_string('wstokenhelp', 'local_discoursesso'), '', PARAM_TEXT)
+	);
  
 }

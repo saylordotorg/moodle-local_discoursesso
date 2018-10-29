@@ -32,3 +32,5 @@ $string['pluginname'] = 'Discourse SSO';
 $string['secretkeylabel'] = 'Shared SSO Secret Key';
 $string['secretkeyhelp'] = 'Secret key that is shared with Discourse. Use the same key as in \'sso_secret\' of your Discourse settings.';
 $string['settingstitle'] = 'Discourse SSO Settings';
+$string['wstoken'] = 'Webservice Token';
+$string['wstokenhelp'] = 'Token to fetch user image via webservice. please create a token in Plugins->Web services->Manage tokens "Moodle mobile web service" ';

@@ -173,13 +173,9 @@ $userpicture = new user_picture($USER);
 $userpicture->size = 1; // Size f1.
 // Did the user upload an avatar or is gravatar enabled?
 if (($userpicture->user->picture > 0) || !empty($CFG->enablegravatar)) {
-	$useravatar = $userpicture->get_url($PAGE)->out(false);
-}
-// Add the avatar if set.
-if (isset($useravatar)) {
-	//$extraparams['avatar_url'] = $useravatar;
 	$extraparams['avatar_url'] =$CFG->wwwroot."/webservice/pluginfile.php/".$USER->id."/user/icon/f1?token=".$CFG->discoursesso_ws_token;
 }
+
 
 // Build query string and redirect back to the Discourse site.
 $query = $ssohelper->getSignInString($nonce, $userid, $useremail, $extraparams);

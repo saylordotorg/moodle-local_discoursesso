@@ -127,6 +127,14 @@ if (get_config('local_discoursesso', 'locale')) {
     $extraparams['locale_force_update'] = 'true';
 }
 
+// Sync admin status, if enabled.
+if (get_config('local_discoursesso', 'adminsync')) {
+    // Check if this user is an admin.
+    if (is_siteadmin()) {
+        $extraparams['admin']='true';
+    }
+}
+
 // Build query string and redirect back to the Discourse site.
 $query = $ssohelper->getSignInString($nonce, $userid, $useremail, $extraparams);
 $url = $CFG->discoursesso_discourse_url . '/session/sso_login?' . $query;

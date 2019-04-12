@@ -24,6 +24,8 @@
 
 $string['discourseurllabel'] = 'Discourse URL';
 $string['discourseurlhelp'] = 'The URL of your Discourse instance, i.e. \'https://meta.discourse.org\'.';
+$string['localelabel'] = 'Sync user locale?';
+$string['localehelp'] = 'This setting will send a user\'s locale in Moodle to the Discourse server on log in. This will change the user\'s language in Discourse to match their language in Moodle.';
 $string['modulename'] = 'Discourse SSO';
 $string['modulename_help'] = 'A plugin to use Moodle as a SSO provider for Discourse.';
 $string['modulenameplural'] = 'Discourse SSOs';

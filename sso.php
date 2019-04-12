@@ -116,6 +116,7 @@ if (($userpicture->user->picture > 0) || !empty($CFG->enablegravatar)) {
 // Add the avatar if set.
 if (isset($useravatar)) {
     $extraparams['avatar_url'] = $useravatar;
+    $extraparams['avatar_force_update'] = 'true';
 }
 
 // Build query string and redirect back to the Discourse site.

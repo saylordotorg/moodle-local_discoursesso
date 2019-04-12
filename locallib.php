@@ -23,3 +23,39 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
 
+function get_discourse_locale($moodleuserlang) {
+    switch ($moodleuserlang) {
+        // For these specific locales, map to Moodle's lang code.
+        // For everything else, cut off anything after underscore ie
+        // es_mx and es_co will return es.
+        // TODO: Moodle has A LOT more languages than Discourse... how to handle those?
+        case "bs":
+            $discourselocale = "bs_BA";
+            break;
+        case "fa":
+            $discourselocale = "fa_IR";
+            break;
+        case "no":
+            $discourselocale = "nb_NO";
+            break;
+        case "pl":
+            $discourselocale = "pl_PL";
+            break;
+        case "pt_br":
+            $discourselocale = "pt_BR";
+            break;
+        case "tr":
+            $discourselocale = "tr_TR";
+            break;
+        case "zh_cn":
+            $discourselocale = "zh_CN";
+            break;
+        case "zh_tw":
+            $discourselocale = "zh_TW";
+            break;
+         default:
+            $discourselocale = preg_replace('~_[a-zA-Z]{2}~s', '', $moodleuserlang);
+    }
+    return $discourselocale;
+}
+

@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
 
+$string['adminsynclabel'] = 'Sync administrators?';
+$string['adminsynchelp'] = 'When enabled, Moodle site administrators will be an admin in Discourse.';
 $string['discourseurllabel'] = 'Discourse URL';
 $string['discourseurlhelp'] = 'The URL of your Discourse instance, i.e. \'https://meta.discourse.org\'.';
 $string['localelabel'] = 'Sync user locale?';

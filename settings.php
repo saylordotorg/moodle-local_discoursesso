@@ -49,5 +49,11 @@ if ( $hassiteconfig ){
     $help = get_string('localehelp', 'local_discoursesso');
     $setting = new admin_setting_configcheckbox($name, $label, $help, 1);
     $settings->add($setting);
+
+	$name = 'local_discoursesso/adminsync';
+    $label = get_string('adminsynclabel', 'local_discoursesso');
+    $help = get_string('adminsynchelp', 'local_discoursesso');
+    $setting = new admin_setting_configcheckbox($name, $label, $help, 1);
+    $settings->add($setting);
  
 }

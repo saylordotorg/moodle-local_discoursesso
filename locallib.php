@@ -54,7 +54,7 @@ function get_discourse_locale($moodleuserlang) {
             $discourselocale = "zh_TW";
             break;
          default:
-            $discourselocale = preg_replace('~_[a-zA-Z]{2}~s', '', $moodleuserlang);
+            $discourselocale = preg_replace('~(_[a-zA-Z0-9]+)+~s', '', $moodleuserlang);
     }
     return $discourselocale;
 }

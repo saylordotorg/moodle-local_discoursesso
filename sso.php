@@ -24,7 +24,7 @@
 */
 
 require_once('../../config.php');
-
+require_once('./locallib.php');
 require_once __DIR__ . '/vendor/discourse-php/src/SSOHelper.php';
 
 global $CFG, $DB, $USER;

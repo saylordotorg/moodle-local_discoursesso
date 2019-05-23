@@ -18,17 +18,19 @@
  *
  * @package    local
  * @subpackage discoursesso
- * @copyright  2017 Saylor Academy
+ * @copyright  2019 Saylor Academy
  * @author     John Azinheira
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2019052300;
-$plugin->requires = 2016052306;  // Requires this Moodle version - at least 3.1
-$plugin->cron     = 0;
-$plugin->component = 'local_discoursesso';
-
-$plugin->release = '1.3.0';
-$plugin->maturity = MATURITY_STABLE;
+$observers = array(
+    // Listen for when a user profile is updated.
+    array(
+        'eventname' => '\core\event\cohort_deleted',
+        'includefile' => '/local/discoursesso/locallib.php',
+        'callback' => 'local_discoursesso_cohort_deleted_handler',
+        'internal' => false
+    ),
+);

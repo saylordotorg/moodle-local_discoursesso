@@ -33,6 +33,7 @@ $string['discourseurlhelp'] = 'The URL of your Discourse instance, i.e. \'https:
 $string['errorcreaterecorddb'] = 'There was an error creating the record in the database.';
 $string['errordeleterecorddb'] = 'There was an error deleting the record from the database.';
 $string['errorcreategroupdiscourse'] = 'Something went wrong creating the group in Discourse. Does a group with the name (${a}) already exist in Discourse?';
+$string['errornoapikey'] = 'No API key found. Please enter an API key on the DiscourseSSO settings page!';
 $string['localelabel'] = 'Sync user locale?';
 $string['localehelp'] = 'This setting will send a user\'s locale in Moodle to the Discourse server on log in. This will change the user\'s language in Discourse to match their language in Moodle.';
 $string['modulename'] = 'Discourse SSO';

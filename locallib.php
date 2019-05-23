@@ -35,7 +35,8 @@ function local_discoursesso_cohort_deleted_handler($event) {
     if ($cohort != false) {
         // First, delete the group from Discourse.
         if (empty($CFG->discoursesso_api_key)) {
-            // Add error notification.
+            // No API key was found.
+            echo $OUTPUT->notification(get_string('errornoapikey', 'local_discoursesso'), NOTIFY_WARNING);
             return false;
         }
 
@@ -112,7 +113,8 @@ function discoursesso_add_group($cohortid) {
     }
     // Make sure that there is an API key set.
     if (empty($CFG->discoursesso_api_key)) {
-        // Add error notification.
+        // No API key was found.
+        echo $OUTPUT->notification(get_string('errornoapikey', 'local_discoursesso'), NOTIFY_WARNING);
         return false;
     }
 
@@ -150,7 +152,8 @@ function discoursesso_add_group($cohortid) {
 
     // First, delete the group from Discourse.
     if (empty($CFG->discoursesso_api_key)) {
-        // Add error notification.
+        // No API key was found.
+        echo $OUTPUT->notification(get_string('errornoapikey', 'local_discoursesso'), NOTIFY_WARNING);
         return false;
     }
     $api = new DiscourseAPI(preg_replace("(^https?://)", "", $CFG->discoursesso_discourse_url), $CFG->discoursesso_api_key, preg_replace("(://.+)", "", $CFG->discoursesso_discourse_url));
@@ -273,24 +276,7 @@ abstract class cohort_selector_base extends user_selector_base {
 
         // And the search options.
         $optionsoutput = false;
-        // if (!cohort_selector_base::$searchoptionsoutput) {
-        //     $output .= print_collapsible_region_start('', 'userselector_options',
-        //         get_string('searchoptions'), 'userselector_optionscollapsed', true, true);
-        //     $output .= $this->option_checkbox('preserveselected', $this->preserveselected,
-        //         get_string('userselectorpreserveselected'));
-        //     $output .= $this->option_checkbox('autoselectunique', $this->autoselectunique,
-        //         get_string('userselectorautoselectunique'));
-        //     $output .= $this->option_checkbox('searchanywhere', $this->searchanywhere,
-        //         get_string('userselectorsearchanywhere'));
-        //     $output .= print_collapsible_region_end(true);
-
-        //     $PAGE->requires->js_init_call('M.local_discoursesso.init_selector_options_tracker', array(), false, self::$jsmodule);
-        //     cohort_selector_base::$searchoptionsoutput = true;
-        // }
         $output .= "</div>\n</div>\n\n";
-
-        // Initialise the ajax functionality.
-        //$output .= $this->initialise_javascript($search);
 
         // Return or output it.
         if ($return) {

@@ -90,10 +90,9 @@ function get_discourse_locale($moodleuserlang) {
     return $discourselocale;
 }
 
-function clean_name($string) {
-    $cleaned = str_replace ("'", "", strtolower($string));
-    $cleaned = str_replace (" ", "_", $cleaned);
-    $cleaned = preg_replace('/[^\p{L}\p{N}]/u', '_', $cleaned);
+function clean_name($name) {
+    $cleaned = preg_replace('/[^\p{L}\p{N}]/u', '_', $name);
+    $cleaned = rtrim($cleaned, '_');
 
     return $cleaned;
 }

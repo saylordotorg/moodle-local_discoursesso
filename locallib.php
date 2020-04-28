@@ -90,10 +90,9 @@ function get_discourse_locale($moodleuserlang) {
     return $discourselocale;
 }
 
-function clean_name($string) {
-    $cleaned = str_replace ("'", "", strtolower($string));
-    $cleaned = str_replace (" ", "_", $cleaned);
-    $cleaned = preg_replace('/[^\p{L}\p{N}]/u', '_', $cleaned);
+function clean_name($name) {
+    $cleaned = preg_replace('/[^\p{L}\p{N}]/u', '_', $name);
+    $cleaned = rtrim($cleaned, '_');
 
     return $cleaned;
 }
@@ -130,7 +129,7 @@ function discoursesso_add_group($cohortid) {
     $r = $api->createGroup(clean_name($ssocohort->cohortname));
 
     if ($r->http_code != 200) {
-        echo $OUTPUT->notification(get_string('errorcreategroupdiscourse', 'local_discoursesso', clean_name($ssocohort->cohortname)), \core\output\notification::NOTIFY_WARNING);
+        echo $OUTPUT->notification(get_string('errorcreategroupdiscourse', 'local_discoursesso', clean_name($ssocohort->cohortname))."<br>Response: [".$r->http_code."] ".$r->apiresult->errors[0], \core\output\notification::NOTIFY_WARNING);
         return false;
     }
 

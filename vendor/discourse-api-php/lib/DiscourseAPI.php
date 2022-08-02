@@ -258,6 +258,54 @@ class DiscourseAPI
     }
 
     /**
+     * addGroupMembers
+     *
+     * @param string $group         name of group
+     * @param array $usernames      array of users to add
+     * @return mixed HTTP return code and API return object
+     */
+
+    function addGroupMembers($group, array $usernames)
+    {
+        $obj = $this->_getRequest('/groups/' . $name . '.json');
+        if ($obj->http_code != 200) {
+            return false;
+        }
+
+        $groupId = $obj->apiresult->id;
+
+        $params = array(
+            'usernames' => implode(',', $usernames)
+        );
+
+        return $this->_putRequest("/groups/{$groupId}/members.json", $params);
+    }
+
+    /**
+     * removeGroupMembers
+     *
+     * @param string $group         name of group
+     * @param array $usernames      array of users to remove
+     * @return mixed HTTP return code and API return object
+     */
+
+    function removeGroupMembers($group, array $usernames)
+    {
+        $obj = $this->_getRequest('/groups/' . $name . '.json');
+        if ($obj->http_code != 200) {
+            return false;
+        }
+
+        $groupId = $obj->apiresult->id;
+
+        $params = array(
+            'usernames' => implode(',', $usernames)
+        );
+
+        return $this->_deleteRequest("/groups/{$groupId}/members.json", $params);
+    }
+
+    /**
      * createUser
      *
      * @param string $name         name of new user

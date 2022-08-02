@@ -33,4 +33,18 @@ $observers = array(
         'callback' => 'local_discoursesso_cohort_deleted_handler',
         'internal' => false
     ),
+    // Listen for when a user is added to a cohort.
+        array(
+        'eventname' => '\core\event\cohort_member_added',
+        'includefile' => '/local/discoursesso/locallib.php',
+        'callback' => 'local_discoursesso_cohort_member_added_handler',
+        'internal' => false
+    ),
+    // Listen for when a user is removed from a cohort.
+        array(
+        'eventname' => '\core\event\cohort_member_removed',
+        'includefile' => '/local/discoursesso/locallib.php',
+        'callback' => 'local_discoursesso_cohort_member_removed_handler',
+        'internal' => false
+    ),
 );

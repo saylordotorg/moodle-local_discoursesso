@@ -54,6 +54,62 @@ function local_discoursesso_cohort_deleted_handler($event) {
     return true;
 }
 
+function local_discoursesso_cohort_member_added_handler($event) {
+    global $CFG, $DB, $OUTPUT;
+    // Since a member was added to a cohort, check if it is in our list of 
+    // cohorts to sync. If so, add the user to the corresponding Discourse 
+    // group via API.
+    $userid = $event->relateduserid;
+    $cohort = $DB->get_record('discoursesso_cohorts', array('cohortid' => $event->objectid), $fields='*', $strictness=IGNORE_MISSING);
+    if ($cohort != false) {
+        // First, delete the group from Discourse.
+        if (empty($CFG->discoursesso_api_key)) {
+            // No API key was found.
+            echo $OUTPUT->notification(get_string('errornoapikey', 'local_discoursesso'), \core\output\notification::NOTIFY_WARNING);
+            return false;
+        }
+
+        $api = new DiscourseAPI(preg_replace("(^https?://)", "", $CFG->discoursesso_discourse_url), $CFG->discoursesso_api_key, preg_replace("(://.+)", "", $CFG->discoursesso_discourse_url));
+        
+        $r = $api->addGroupMembers(clean_name($cohort->cohortname), array($userid));
+
+        if($r->http_code != 200) {
+            return false;
+        }
+
+    }
+
+    return true;
+}
+
+function local_discoursesso_cohort_member_removed_handler($event) {
+    global $CFG, $DB, $OUTPUT;
+    // Since a member was added to a cohort, check if it is in our list of 
+    // cohorts to sync. If so, add the user to the corresponding Discourse 
+    // group via API.
+    $userid = $event->relateduserid;
+    $cohort = $DB->get_record('discoursesso_cohorts', array('cohortid' => $event->objectid), $fields='*', $strictness=IGNORE_MISSING);
+    if ($cohort != false) {
+        // First, delete the group from Discourse.
+        if (empty($CFG->discoursesso_api_key)) {
+            // No API key was found.
+            echo $OUTPUT->notification(get_string('errornoapikey', 'local_discoursesso'), \core\output\notification::NOTIFY_WARNING);
+            return false;
+        }
+
+        $api = new DiscourseAPI(preg_replace("(^https?://)", "", $CFG->discoursesso_discourse_url), $CFG->discoursesso_api_key, preg_replace("(://.+)", "", $CFG->discoursesso_discourse_url));
+        
+        $r = $api->removeGroupMembers(clean_name($cohort->cohortname), array($userid));
+
+        if($r->http_code != 200) {
+            return false;
+        }
+
+    }
+
+    return true;
+}
+
 function get_discourse_locale($moodleuserlang) {
     switch ($moodleuserlang) {
         // For these specific locales, map to Moodle's lang code.
